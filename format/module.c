@@ -10,6 +10,19 @@
 
 static const void *global_format_user_ptr;
 
+// TODO: extract some of this into dedicated functions.
+// It may be useful to provide an interface for users to
+// include format-strings in their functions and provide hooks
+// something like 
+// void handle_format(
+//     void*dest,
+//     const char *format,
+//     void *handle_chars(String view, void*dest),
+//     void *handle_directive(String view, void *context),
+//     void *context
+//     );
+// This might allow us to skip the formatting into a buffer to immediately
+// flush it to stdout procedure without rewriting this loop too many times.
 String format_to_va(Byte_Slice dest, cstring fmt, va_list params) {
 	char *cursor = dest.begin;
 
