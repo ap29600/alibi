@@ -58,6 +58,7 @@ fmt_procedure_t lookup_format_directive(Short_String name);
 String format(cstring fmt, ...);
 String format_to(Byte_Slice data, const char *fmt, ...);
 
+void fprint(FILE *stream, String s);
 void print(String s);
 void println(String s);
 

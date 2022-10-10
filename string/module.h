@@ -20,4 +20,8 @@ bool   string_eq_cstring(String a, cstring b);
 				 cstring: string_eq_cstring \
 			 )(a, b)
 
+static inline String cstring_unsafe_slice(cstring str, u64 begin, u64 end) {
+	return (String){.begin = str + begin, .end = str + end};
+}
+
 #endif
