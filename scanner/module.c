@@ -29,8 +29,8 @@ void report_state(Scanner *scanner, FILE *stream) {
 	String before_err = {line_begin, begin + scanned_bytes(scanner)};
 	String after_err = {begin + scanned_bytes(scanner), line_end};
 
-	format_fprintln(stream, "{loc}: [ERROR `" COL_RED_F "{error}" RESET "`]", scanner->location, scanner->error);
-	format_fprintln(stream, COL_BLU_F "{str}" COL_RED_F "{str}" RESET, before_err, after_err);
+	fmt_fprintln(stream, "{loc}: [ERROR `" COL_RED_F "{error}" RESET "`]", scanner->location, scanner->error);
+	fmt_fprintln(stream, COL_BLU_F "{str}" COL_RED_F "{str}" RESET, before_err, after_err);
 
 	u64 col = scanner->location.col;
 	for(u64 i = 0; i < col; ++i) { fputc(' ', stream); }
@@ -182,7 +182,7 @@ Scanner scanner_from_filename(const char *filename) {
 
 	FILE *file = fopen(filename, "rb");
 	if (!file) {
-		format_println("[ERROR]: unable to open file `{cstr}`", filename);
+		fmt_println("[ERROR]: unable to open file `{cstr}`", filename);
 		return (Scanner){0};
 	}
 

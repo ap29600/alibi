@@ -55,18 +55,21 @@ typedef enum {
 bool register_format_directive(Short_String name, fmt_procedure_t format);
 fmt_procedure_t lookup_format_directive(Short_String name);
 
-String format(cstring fmt, ...);
-String format_to(Byte_Slice data, const char *fmt, ...);
+String format_to_(Byte_Slice data, bool newline, const char *fmt, ...);
+#define fmt(...)          format_to_(default_format_buffer, false  __VA_ARGS__)
+#define fmtln(...)        format_to_(default_format_buffer, true,  __VA_ARGS__)
+#define fmt_to(dest, ...) format_to_(default_format_buffer, false, __VA_ARGS__)
+#define fmtln_to(...)     format_to_(default_format_buffer, true,  __VA_ARGS__)
 
-void fprint(FILE *stream, String s);
-void print(String s);
-void println(String s);
+i64 format_fprint_(FILE *dest, bool newline, cstring fmt, ...);
+#define fmt_print(...)          format_fprint_(stdout, false, __VA_ARGS__)
+#define fmt_println(...)        format_fprint_(stdout, true,  __VA_ARGS__)
+#define fmt_fprint(dest, ...)   format_fprint_(dest,   false, __VA_ARGS__)
+#define fmt_fprintln(dest, ...) format_fprint_(dest,   true,  __VA_ARGS__)
 
-void format_print(cstring fmt, ...);
-void format_println(cstring fmt, ...);
-
-void format_fprint(FILE *stream, cstring fmt, ...);
-void format_fprintln(FILE *stream, cstring fmt, ...);
+i64 fprint(FILE *stream, String s);
+i64 print(String s);
+i64 println(String s);
 
 void set_format_user_ptr(const void* user_ptr);
 
